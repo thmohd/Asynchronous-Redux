@@ -78,6 +78,17 @@
       }
     }
 
+    function handleRemoveTodo(todo) {
+      return (dispatch) => {
+        dispatch(removeTodoAction(todo.id))
+        return API.deleteTodo(todo.id)
+          .catch(() => {
+              dispatch(addTodoAction(todo))
+              alert('something went wrong! please try again')
+          })
+      }
+    }
+
     const checker = (store) => (next) => (action) => {
       if (
         action.type === ADD_TODO &&
@@ -192,12 +203,7 @@
 
       }
       removeItem = (todo) => {
-        this.props.store.dispatch(removeTodoAction(todo.id))
-        return API.deleteTodo(todo.id)
-          .catch(() => {
-              this.props.store.dispatch(addTodoAction(todo))
-              alert('something went wrong! please try again')
-          })
+        this.props.store.dispatch(handleRemoveTodo(todo))
       }
       toggleItem = (id) => {
         this.props.store.dispatch(toggleTodoAction(id))
