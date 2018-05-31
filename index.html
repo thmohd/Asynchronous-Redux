@@ -237,16 +237,16 @@
     class Todos extends React.Component {
       addItem = (e) => {
         e.preventDefault()
-        this.props.store.dispatch(handleAddTodo(
+        this.props.dispatch(handleAddTodo(
           this.input.value,
           () => this.input.value = ''
         ))
       }
       removeItem = (todo) => {
-        this.props.store.dispatch(handleRemoveTodo(todo))
+        this.props.dispatch(handleRemoveTodo(todo))
       }
       toggleItem = (id) => {
-        this.props.store.dispatch(handleToggle(id))
+        this.props.dispatch(handleToggle(id))
       }
       render() {
         return (
@@ -272,13 +272,13 @@
     class Goals extends React.Component {
       addItem = (e) => {
         e.preventDefault()
-        this.props.store.dispatch(handleAddGoal(
+        this.props.dispatch(handleAddGoal(
           this.input.value,
           () => this.input.value = ''
         ))
       }
       removeItem = (goal) => {
-        this.props.store.dispatch(handleRemoveGoal(goal))
+        this.props.dispatch(handleRemoveGoal(goal))
       }
       render() {
         return (
@@ -316,8 +316,8 @@
 
         return (
           <div>
-            <Todos todos={todos} store={store} />
-            <Goals goals={goals} store={store}/>
+            <Todos todos={todos} dispatch={store.dispatch} />
+            <Goals goals={goals} dispatch={store.dispatch}/>
           </div>
         )
       }
