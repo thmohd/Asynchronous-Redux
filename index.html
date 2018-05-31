@@ -307,10 +307,6 @@
         store.subscribe(() => this.forceUpdate())
       }
       render() {
-
-        <Context.Consumer st>
-
-        </Context.Consumer>
         const { store } = this.props
         const { todos, goals, loading } = store.getState()
 
@@ -327,9 +323,21 @@
       }
     }
 
-    class Provider extends React.Component {
-      render(){
+    class ConnectedApp extends React.Component {
+      render() {
         return(
+          <Context.Consumer>
+            {(store)=> (
+              <App store={store} />
+            )}
+          </Context.Consumer>
+        )
+      }
+    }
+
+    class Provider extends React.Component {
+      render() {
+        return (
           <Context.Provider value={this.props.store}>
             {this.props.children}
           </Context.Provider>
@@ -337,12 +345,11 @@
       }
     }
 
-
-    const Context = React.createContaxt()
+    const Context = React.createContext()
 
     ReactDOM.render(
       <Provider store={store}>
-        <App />
+        <ConnectedApp/>
       </Provider>,
       document.getElementById('app')
     )
