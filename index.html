@@ -110,6 +110,17 @@
       }
     }
 
+    function handleToggle(id){
+      return (dispatch) => {
+        dispatch(toggleTodoAction(id))
+        return API.saveTodoToggle(id)
+              .catch(() => {
+                dispatch(toggleTodoAction(id))
+                alert('Something went wrong! please try again')
+              })
+      }
+    }
+
     const checker = (store) => (next) => (action) => {
       if (
         action.type === ADD_TODO &&
@@ -222,13 +233,7 @@
         this.props.store.dispatch(handleRemoveTodo(todo))
       }
       toggleItem = (id) => {
-        this.props.store.dispatch(toggleTodoAction(id))
-
-        return API.saveTodoToggle(id)
-              .catch(() => {
-                this.props.store.dispatch(toggleTodoAction(id))
-                alert('Something went wrong! please try again')
-              })
+        this.props.store.dispatch(handleToggle(id))
       }
       render() {
         return (
