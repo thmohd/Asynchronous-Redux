@@ -307,6 +307,10 @@
         store.subscribe(() => this.forceUpdate())
       }
       render() {
+
+        <Context.Consumer st>
+
+        </Context.Consumer>
         const { store } = this.props
         const { todos, goals, loading } = store.getState()
 
@@ -323,8 +327,23 @@
       }
     }
 
+    class Provider extends React.Component {
+      render(){
+        return(
+          <Context.Provider value={this.props.store}>
+            {this.props.children}
+          </Context.Provider>
+        )
+      }
+    }
+
+
+    const Context = React.createContaxt()
+
     ReactDOM.render(
-      <App store={store} />,
+      <Provider store={store}>
+        <App />
+      </Provider>,
       document.getElementById('app')
     )
   </script>
