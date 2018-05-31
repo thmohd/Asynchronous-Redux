@@ -121,7 +121,7 @@
       }
     }
 
-    function handleFetchingData(){
+    function handleInitialData(){
       return (dispatch) => {
         Promise.all([
             API.fetchTodos(),
@@ -302,7 +302,7 @@
     class App extends React.Component {
       componentDidMount () {
         const { store } = this.props
-        store.dispatch(handleFetchingData())
+        store.dispatch(handleInitialData())
         store.subscribe(() => this.forceUpdate())
       }
       render() {
