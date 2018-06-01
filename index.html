@@ -269,18 +269,9 @@
       }
     }
 
-    class ConnectedTodos extends React.Component {
-      render() {
-        return(
-          <Context.Consumer>
-            {(store) => {
-              const {todos} = store.getState()
-              return <Todos dispatch={store.dispatch} todos={todos} />
-            }}
-          </Context.Consumer>
-        )
-      }
-    }
+    const ConnectedTodos = connect((state) => ({
+      todos: state.todos
+    }))(Todos)
 
     class Goals extends React.Component {
 
@@ -314,23 +305,14 @@
       }
     }
 
-    class ConnectedGoals extends React.Component {
-      render() {
-        return (
-          <Context.Consumer>
-            {(store) => {
-              const {goals} = store.getState()
-              return <Goals dispatch={store.dispatch} goals={goals}/>
-            }}
-          </Context.Consumer>
-        )
-      }
-    }
+    const ConnectedGoals = connect((state) => ({
+      goals: state.loading
+    }))(Goals)
 
     class App extends React.Component {
       componentDidMount () {
         const { dispatch } = this.props
-        
+
         dispatch(handleInitialData())
       }
       render() {
