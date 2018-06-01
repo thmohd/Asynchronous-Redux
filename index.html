@@ -329,13 +329,13 @@
 
     class App extends React.Component {
       componentDidMount () {
-        const { store } = this.props
-        store.dispatch(handleInitialData())
-        store.subscribe(() => this.forceUpdate())
+        const { dispatch } = this.props
+        
+        dispatch(handleInitialData())
       }
       render() {
 
-        const { loading } = store.getState()
+        const { loading } = this.props
 
         if(loading === true) {
           return <h3>Loading..</h3>
@@ -350,17 +350,11 @@
       }
     }
 
-    class ConnectedApp extends React.Component {
-      render() {
-        return(
-          <Context.Consumer>
-            {(store)=> (
-              <App store={store} />
-            )}
-          </Context.Consumer>
-        )
-      }
-    }
+    const ConnectedApp = connect((state) => ({
+        loading: state.loading
+      }))(App)
+
+    //connect: Render any component, passing that component any data it needs from the store
 
     class Provider extends React.Component {
       render() {
