@@ -269,6 +269,19 @@
       }
     }
 
+    class ConnectedTodos extends React.Component {
+      render() {
+        return(
+          <Context.Consumer>
+            {(store) => {
+              const {todos} = store.getState()
+              return <Todos dispatch={store.dispatch} todos={todos} />
+            }}
+          </Context.Consumer>
+        )
+      }
+    }
+
     class Goals extends React.Component {
 
       addItem = (e) => {
@@ -321,8 +334,8 @@
         store.subscribe(() => this.forceUpdate())
       }
       render() {
-        const { store } = this.props
-        const { todos, goals, loading } = store.getState()
+
+        const { loading } = store.getState()
 
         if(loading === true) {
           return <h3>Loading..</h3>
@@ -330,7 +343,7 @@
 
         return (
           <div>
-            <Todos todos={todos} dispatch={store.dispatch} />
+            <ConnectedTodos />
             <ConnectedGoals />
           </div>
         )
