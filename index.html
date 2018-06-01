@@ -270,6 +270,7 @@
     }
 
     class Goals extends React.Component {
+
       addItem = (e) => {
         e.preventDefault()
         this.props.dispatch(handleAddGoal(
@@ -300,6 +301,19 @@
       }
     }
 
+    class ConnectedGoals extends React.Component {
+      render() {
+        return (
+          <Context.Consumer>
+            {(store) => {
+              const {goals} = store.getState()
+              return <Goals dispatch={store.dispatch} goals={goals}/>
+            }}
+          </Context.Consumer>
+        )
+      }
+    }
+
     class App extends React.Component {
       componentDidMount () {
         const { store } = this.props
@@ -317,7 +331,7 @@
         return (
           <div>
             <Todos todos={todos} dispatch={store.dispatch} />
-            <Goals goals={goals} dispatch={store.dispatch}/>
+            <ConnectedGoals />
           </div>
         )
       }
